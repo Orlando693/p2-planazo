@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planazo - Detalle del plan</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/detalle-plan.css">
+</head>
+<body>
+  <main class="contenedor-login">
+    <h1>PLANAZO</h1>
+
+    <section id="contenido-plan">
+      <div class="informacion-plan">
+        <h2 id="nombre-plan"></h2>
+        <p id="descripcion-plan"></p>
+        <p id="fecha-plan"></p>
+        <p id="estado-plan"></p>
+      </div>
+
+      <h2>Alternativas</h2>
+      <section id="lista-alternativas" class="lista-alternativas"></section>
+
+      <form id="formulario-alternativa" novalidate>
+        <label for="alternativa">Nueva alternativa</label>
+        <input type="text" id="alternativa" name="alternativa" placeholder="Ejemplo: Ir al cine">
+        <p id="mensaje" class="mensaje" aria-live="polite"></p>
+        <button type="submit">Agregar</button>
+      </form>
+    </section>
+
+    <button id="volver" class="volver" type="button">Volver a mis planes</button>
+  </main>
+
+  <script src="js/detalle-plan.js"></script>
+</body>
+</html>

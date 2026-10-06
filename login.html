@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planazo - Iniciar sesión</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <main class="contenedor-login">
+    <h1>PLANAZO</h1>
+
+    <form id="formulario-login" novalidate>
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" placeholder="tu@correo.com">
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Tu contraseña">
+
+      <p id="mensaje" class="mensaje" aria-live="polite"></p>
+
+      <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <p class="registro">¿No tienes cuenta?</p>
+    <a href="registro.html">Registrarse</a>
+  </main>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

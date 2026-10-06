@@ -1,0 +1,20 @@
+.informacion-plan {
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.informacion-plan p {
+  margin: 8px 0;
+}
+
+.lista-alternativas {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.alternativa {
+  margin: 0 0 10px;
+  padding: 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+}

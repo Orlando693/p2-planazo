@@ -1,0 +1,22 @@
+.saludo {
+  margin: -16px 0 28px;
+}
+
+.lista-planes {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #bdbdbd;
+  background-color: #ffffff;
+  text-align: left;
+}
+
+.plan span {
+  font-size: 0.9rem;
+}
