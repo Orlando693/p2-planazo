@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planazo - Editar plan</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/editar-plan.css">
+</head>
+<body>
+  <main class="contenedor-login">
+    <h1>PLANAZO</h1>
+    <h2>Editar plan</h2>
+
+    <p id="mensaje" class="mensaje" aria-live="polite"></p>
+
+    <form id="formulario-editar" novalidate>
+      <label for="nombre">Nombre del plan</label>
+      <input type="text" id="nombre" name="nombre">
+
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" name="descripcion"></textarea>
+
+      <label for="fecha">Fecha</label>
+      <input type="date" id="fecha" name="fecha">
+
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </main>
+
+  <script src="js/editar-plan.js"></script>
+</body>
+</html>

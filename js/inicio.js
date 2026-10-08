@@ -2,19 +2,30 @@ const saludo = document.getElementById("saludo");
 const listaPlanes = document.getElementById("lista-planes");
 const botonCrearPlan = document.getElementById("crear-plan");
 const usuario = JSON.parse(localStorage.getItem("usuario"));
-const planes = JSON.parse(localStorage.getItem("planes")) || [];
 
 if (usuario) {
   saludo.textContent = "Hola, " + usuario.nombre;
 }
 
-if (planes.length === 0) {
-  listaPlanes.textContent = "No tienes planes todavía.";
-} else {
+async function mostrarPlanes() {
+  const respuesta = await fetch("/api/planes");
+  const planes = await respuesta.json();
+
+  if (planes.length === 0) {
+    listaPlanes.textContent = "No tienes planes todavía.";
+    return;
+  }
+
   planes.forEach(function (plan) {
     const bloquePlan = document.createElement("button");
+    const nombrePlan = document.createElement("strong");
+    const estadoPlan = document.createElement("span");
+
     bloquePlan.className = "plan";
-    bloquePlan.innerHTML = "<strong>" + plan.nombre + "</strong><span>Estado: " + plan.estado + "</span>";
+    nombrePlan.textContent = plan.nombre;
+    estadoPlan.textContent = "Estado: " + plan.estado;
+    bloquePlan.appendChild(nombrePlan);
+    bloquePlan.appendChild(estadoPlan);
 
     bloquePlan.addEventListener("click", function () {
       localStorage.setItem("planActual", plan.id);
@@ -24,6 +35,8 @@ if (planes.length === 0) {
     listaPlanes.appendChild(bloquePlan);
   });
 }
+
+mostrarPlanes();
 
 botonCrearPlan.addEventListener("click", function () {
   window.location.href = "crear-plan.html";

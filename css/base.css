@@ -61,6 +61,18 @@ input {
   font-size: 1rem;
 }
 
+textarea {
+  width: 100%;
+  min-height: 90px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+}
+
 button {
   width: 100%;
   padding: 13px;
@@ -83,6 +95,14 @@ button {
   margin-top: 12px;
   border: 1px solid #bdbdbd;
   background-color: #ffffff;
+}
+
+.registro {
+  margin: 28px 0 8px;
+}
+
+a {
+  color: #3d7954;
 }
 
 @media (min-width: 600px) {
