@@ -122,6 +122,10 @@ async function eliminarPlan() {
 }
 
 async function cancelarPlan() {
+  if (!puedeCancelarPlan(plan)) {
+    return;
+  }
+
   plan.estado = "Cancelado";
   await guardarPlan();
   mostrarPlan();

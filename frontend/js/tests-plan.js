@@ -12,3 +12,17 @@ pruebas.forEach(function (prueba) {
   mensaje.textContent = (resultado ? "PASS - " : "FAIL - ") + prueba.texto;
   resultados.appendChild(mensaje);
 });
+
+const planPermitido = { estado: "Decidido" };
+const resultadoPermitido = puedeCancelarPlan(planPermitido) === true;
+const mensajePermitido = document.createElement("p");
+
+mensajePermitido.textContent = (resultadoPermitido ? "PASS - " : "FAIL - ") + "Plan Decidido puede cancelarse";
+resultados.appendChild(mensajePermitido);
+
+const planRechazado = { estado: "Cancelado" };
+const resultadoRechazado = puedeCancelarPlan(planRechazado) === false;
+const mensajeRechazado = document.createElement("p");
+
+mensajeRechazado.textContent = (resultadoRechazado ? "PASS - " : "FAIL - ") + "Plan Cancelado no puede volver a cancelarse";
+resultados.appendChild(mensajeRechazado);
