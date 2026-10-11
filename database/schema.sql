@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS planes (
     fecha TEXT,
     estado TEXT NOT NULL,
     alternativas TEXT,
-    elegida TEXT
+    elegida TEXT,
+    organizador TEXT
 );

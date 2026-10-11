@@ -4,6 +4,7 @@ const descripcion = document.getElementById("descripcion");
 const fecha = document.getElementById("fecha");
 const mensaje = document.getElementById("mensaje");
 const volver = document.getElementById("volver");
+const usuario = JSON.parse(localStorage.getItem("usuario"));
 
 formulario.addEventListener("submit", async function (evento) {
   evento.preventDefault();
@@ -19,7 +20,8 @@ formulario.addEventListener("submit", async function (evento) {
     fecha: fecha.value,
     estado: "En decisión",
     alternativas: [],
-    elegida: null
+    elegida: null,
+    organizador: usuario.correo
   };
 
   const respuesta = await fetch("/api/planes", {

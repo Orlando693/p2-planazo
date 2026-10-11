@@ -42,9 +42,10 @@ router.post("/", function (req, res) {
   const estado = req.body.estado || "En decisión";
   const alternativas = req.body.alternativas || [];
   const elegida = req.body.elegida || null;
-  const sql = "INSERT INTO planes (nombre, descripcion, fecha, estado, alternativas, elegida) VALUES (?, ?, ?, ?, ?, ?)";
+  const organizador = req.body.organizador || "";
+  const sql = "INSERT INTO planes (nombre, descripcion, fecha, estado, alternativas, elegida, organizador) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-  db.run(sql, [nombre, descripcion, fecha, estado, JSON.stringify(alternativas), elegida], function (error) {
+  db.run(sql, [nombre, descripcion, fecha, estado, JSON.stringify(alternativas), elegida, organizador], function (error) {
     if (error) {
       res.status(500).json({ error: "No se pudo crear el plan." });
       return;
@@ -57,7 +58,8 @@ router.post("/", function (req, res) {
       fecha: fecha,
       estado: estado,
       alternativas: alternativas,
-      elegida: elegida
+      elegida: elegida,
+      organizador: organizador
     });
   });
 });
@@ -69,9 +71,10 @@ router.put("/:id", function (req, res) {
   const estado = req.body.estado || "En decisión";
   const alternativas = req.body.alternativas || [];
   const elegida = req.body.elegida || null;
-  const sql = "UPDATE planes SET nombre = ?, descripcion = ?, fecha = ?, estado = ?, alternativas = ?, elegida = ? WHERE id = ?";
+  const organizador = req.body.organizador || null;
+  const sql = "UPDATE planes SET nombre = ?, descripcion = ?, fecha = ?, estado = ?, alternativas = ?, elegida = ?, organizador = COALESCE(?, organizador) WHERE id = ?";
 
-  db.run(sql, [nombre, descripcion, fecha, estado, JSON.stringify(alternativas), elegida, req.params.id], function (error) {
+  db.run(sql, [nombre, descripcion, fecha, estado, JSON.stringify(alternativas), elegida, organizador, req.params.id], function (error) {
     if (error) {
       res.status(500).json({ error: "No se pudo actualizar el plan." });
       return;
@@ -89,7 +92,8 @@ router.put("/:id", function (req, res) {
       fecha: fecha,
       estado: estado,
       alternativas: alternativas,
-      elegida: elegida
+      elegida: elegida,
+      organizador: organizador
     });
   });
 });
