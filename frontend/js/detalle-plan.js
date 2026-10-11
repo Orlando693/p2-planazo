@@ -12,6 +12,7 @@ const editar = document.getElementById("editar");
 const eliminar = document.getElementById("eliminar");
 const cancelar = document.getElementById("cancelar");
 const volver = document.getElementById("volver");
+const usuario = JSON.parse(localStorage.getItem("usuario"));
 let plan;
 
 function mostrarAlternativas() {
@@ -30,6 +31,11 @@ function mostrarAlternativas() {
     bloqueAlternativa.textContent = opcion;
     botonElegir.textContent = "Elegir";
     botonElegir.addEventListener("click", async function () {
+      if (!puedeConfirmarPlan(plan)) {
+        mensaje.textContent = "No puedes confirmar un plan cancelado.";
+        return;
+      }
+
       plan.estado = "Decidido";
       plan.elegida = opcion;
       await guardarPlan();
@@ -45,7 +51,7 @@ function mostrarPlan() {
   descripcionPlan.textContent = plan.descripcion ? "Descripción: " + plan.descripcion : "";
   fechaPlan.textContent = plan.fecha ? "Fecha: " + plan.fecha : "";
   estadoPlan.textContent = "Estado: " + plan.estado + (plan.elegida ? " - Opción elegida: " + plan.elegida : "");
-  cancelar.hidden = plan.estado !== "Decidido";
+  cancelar.hidden = false;
   mostrarAlternativas();
 }
 
@@ -122,7 +128,20 @@ async function eliminarPlan() {
 }
 
 async function cancelarPlan() {
-  if (!puedeCancelarPlan(plan)) {
+  if (!puedeCancelarPlan(plan, usuario)) {
+    if (plan.estado === "Cancelado") {
+      mensaje.textContent = "Este plan ya está cancelado.";
+      return;
+    }
+
+    if (plan.organizador !== usuario.correo) {
+      mensaje.textContent = "Solo el organizador puede cancelar este plan.";
+    }
+
+    return;
+  }
+
+  if (!confirm("¿Seguro que quieres cancelar este plan?")) {
     return;
   }
 
