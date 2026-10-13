@@ -33,3 +33,25 @@ const mensajeConfirmacion = document.createElement("p");
 
 mensajeConfirmacion.textContent = (resultadoConfirmacion ? "PASS - " : "FAIL - ") + "Un plan Cancelado no puede confirmarse";
 resultados.appendChild(mensajeConfirmacion);
+
+function filtrarPorEstado(planes, estado) {
+  return planes.filter(function (plan) {
+    return plan.estado === estado;
+  });
+}
+
+const planesParaFiltro = [
+  { nombre: "Salida viernes", estado: "Decidido" },
+  { nombre: "Partido sábado", estado: "Cancelado" }
+];
+const cancelados = filtrarPorEstado(planesParaFiltro, "Cancelado");
+const mensajeCancelados = document.createElement("p");
+
+mensajeCancelados.textContent = (cancelados.length === 1 ? "PASS - " : "FAIL - ") + "Filtro cancelado devuelve resultados";
+resultados.appendChild(mensajeCancelados);
+
+const pendientes = filtrarPorEstado(planesParaFiltro, "En decisión");
+const mensajeSinCoincidencias = document.createElement("p");
+
+mensajeSinCoincidencias.textContent = (pendientes.length === 0 ? "PASS - " : "FAIL - ") + "Filtro sin coincidencias devuelve 0 resultados";
+resultados.appendChild(mensajeSinCoincidencias);

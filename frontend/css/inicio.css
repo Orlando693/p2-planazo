@@ -44,3 +44,23 @@
 .plan span {
   font-size: 0.9rem;
 }
+
+.estado {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.estado-pendiente {
+  color: #6b5600;
+  background-color: #fff3cd;
+}
+
+.estado-confirmado {
+  color: #155724;
+  background-color: #d4edda;
+}
+
+.estado-cancelado {
+  color: #721c24;
+  background-color: #f8d7da;
+}

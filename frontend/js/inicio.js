@@ -52,6 +52,19 @@ async function cargarPlanes() {
     bloquePlan.className = "plan";
     nombrePlan.textContent = plan.nombre;
     estadoPlan.textContent = "Estado: " + plan.estado;
+
+    if (plan.estado === "En decisión") {
+      estadoPlan.className = "estado estado-pendiente";
+    }
+
+    if (plan.estado === "Decidido") {
+      estadoPlan.className = "estado estado-confirmado";
+    }
+
+    if (plan.estado === "Cancelado") {
+      estadoPlan.className = "estado estado-cancelado";
+    }
+
     bloquePlan.appendChild(nombrePlan);
     bloquePlan.appendChild(estadoPlan);
 
