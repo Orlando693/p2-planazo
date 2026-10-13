@@ -9,7 +9,50 @@ function convertirPlan(plan) {
 }
 
 router.get("/", function (req, res) {
-  db.all("SELECT * FROM planes", function (error, planes) {
+  const condiciones = [];
+  const parametros = [];
+  const nombre = req.query.nombre;
+  const estado = req.query.estado;
+  const fecha = req.query.fecha;
+  let estadoReal;
+
+  if (nombre) {
+    condiciones.push("LOWER(nombre) LIKE LOWER(?)");
+    parametros.push("%" + nombre + "%");
+  }
+
+  if (estado === "pendiente") {
+    estadoReal = "En decisión";
+  }
+
+  if (estado === "confirmado") {
+    estadoReal = "Decidido";
+  }
+
+  if (estado === "cancelado") {
+    estadoReal = "Cancelado";
+  }
+
+  if (estadoReal) {
+    condiciones.push("estado = ?");
+    parametros.push(estadoReal);
+  }
+
+  if (fecha === "proximos7") {
+    condiciones.push("date(fecha) BETWEEN date('now') AND date('now', '+7 days')");
+  }
+
+  if (fecha === "vencidos") {
+    condiciones.push("date(fecha) < date('now')");
+  }
+
+  let sql = "SELECT * FROM planes";
+
+  if (condiciones.length > 0) {
+    sql += " WHERE " + condiciones.join(" AND ");
+  }
+
+  db.all(sql, parametros, function (error, planes) {
     if (error) {
       res.status(500).json({ error: "No se pudieron obtener los planes." });
       return;
