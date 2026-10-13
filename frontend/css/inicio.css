@@ -2,6 +2,30 @@
   margin: -16px 0 28px;
 }
 
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.filtros input,
+.filtros select,
+.filtros button {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.filtros button {
+  margin-top: 8px;
+}
+
+#filtros-activos {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+
 .lista-planes {
   margin-top: 24px;
   text-align: left;

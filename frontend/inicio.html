@@ -15,6 +15,29 @@
     <h2>Mis planes</h2>
     <button id="crear-plan" type="button">Crear nuevo plan</button>
 
+    <section class="filtros">
+      <label for="buscar-nombre">Buscar por nombre</label>
+      <input id="buscar-nombre" type="text" placeholder="Buscar por nombre">
+
+      <label for="filtro-estado">Estado</label>
+      <select id="filtro-estado">
+        <option value="">Todos</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+
+      <label for="filtro-fecha">Fecha</label>
+      <select id="filtro-fecha">
+        <option value="">Todas las fechas</option>
+        <option value="proximos7">Próximos 7 días</option>
+        <option value="vencidos">Vencidos</option>
+      </select>
+
+      <button id="limpiar-filtros" type="button">Limpiar filtros</button>
+      <p id="filtros-activos">Sin filtros activos</p>
+    </section>
+
     <section id="lista-planes" class="lista-planes"></section>
   </main>
 
