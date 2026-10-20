@@ -9,11 +9,24 @@ const formulario = document.getElementById("formulario-alternativa");
 const alternativa = document.getElementById("alternativa");
 const mensaje = document.getElementById("mensaje");
 const editar = document.getElementById("editar");
+const confirmar = document.getElementById("confirmar");
 const eliminar = document.getElementById("eliminar");
 const cancelar = document.getElementById("cancelar");
 const volver = document.getElementById("volver");
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 let plan;
+
+function nombreEstado(estado) {
+  if (estado === "En decisión") {
+    return "Pendiente";
+  }
+
+  if (estado === "Decidido") {
+    return "Confirmado";
+  }
+
+  return "Cancelado";
+}
 
 function mostrarAlternativas() {
   listaAlternativas.innerHTML = "";
@@ -36,7 +49,6 @@ function mostrarAlternativas() {
         return;
       }
 
-      plan.estado = "Decidido";
       plan.elegida = opcion;
       await guardarPlan();
       mostrarPlan();
@@ -50,16 +62,32 @@ function mostrarPlan() {
   nombrePlan.textContent = "Plan: " + plan.nombre;
   descripcionPlan.textContent = plan.descripcion ? "Descripción: " + plan.descripcion : "";
   fechaPlan.textContent = plan.fecha ? "Fecha: " + plan.fecha : "";
-  estadoPlan.textContent = "Estado: " + plan.estado + (plan.elegida ? " - Opción elegida: " + plan.elegida : "");
+  estadoPlan.textContent = "Estado: " + nombreEstado(plan.estado) + (plan.elegida ? " - Opción elegida: " + plan.elegida : "");
+  confirmar.hidden = plan.estado !== "En decisión";
   cancelar.hidden = false;
   mostrarAlternativas();
 }
 
 async function guardarPlan() {
-  await fetch("/api/planes/" + idPlan, {
+  const respuesta = await fetch("/api/planes/" + idPlan, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(plan)
+  });
+
+  return respuesta.ok;
+}
+
+async function guardarEvento(accion) {
+  await fetch("/api/historial", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      plan_id: plan.id,
+      plan_nombre: plan.nombre,
+      accion: accion,
+      organizador: plan.organizador
+    })
   });
 }
 
@@ -96,6 +124,10 @@ async function cargarPlan() {
   cancelar.addEventListener("click", function () {
     cancelarPlan();
   });
+
+  confirmar.addEventListener("click", function () {
+    confirmarPlan();
+  });
 }
 
 async function agregarAlternativa() {
@@ -104,6 +136,26 @@ async function agregarAlternativa() {
     alternativa.value = "";
     mensaje.textContent = "";
     mostrarAlternativas();
+}
+
+async function confirmarPlan() {
+  if (!puedeConfirmarPlan(plan)) {
+    mensaje.textContent = "No puedes confirmar un plan cancelado.";
+    return;
+  }
+
+  const estadoAnterior = plan.estado;
+  plan.estado = "Decidido";
+
+  if (!await guardarPlan()) {
+    plan.estado = estadoAnterior;
+    mensaje.textContent = "No se pudo confirmar el plan.";
+    return;
+  }
+
+  await guardarEvento("Confirmado");
+  mostrarPlan();
+  mensaje.textContent = "";
 }
 
 async function eliminarPlan() {
@@ -145,8 +197,16 @@ async function cancelarPlan() {
     return;
   }
 
+  const estadoAnterior = plan.estado;
   plan.estado = "Cancelado";
-  await guardarPlan();
+
+  if (!await guardarPlan()) {
+    plan.estado = estadoAnterior;
+    mensaje.textContent = "No se pudo cancelar el plan.";
+    return;
+  }
+
+  await guardarEvento("Cancelado");
   mostrarPlan();
   mensaje.textContent = "";
 }
