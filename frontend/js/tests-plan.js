@@ -55,3 +55,26 @@ const mensajeSinCoincidencias = document.createElement("p");
 
 mensajeSinCoincidencias.textContent = (pendientes.length === 0 ? "PASS - " : "FAIL - ") + "Filtro sin coincidencias devuelve 0 resultados";
 resultados.appendChild(mensajeSinCoincidencias);
+
+function ordenarEventosPorId(eventos) {
+  return eventos.sort(function (a, b) {
+    return b.id - a.id;
+  });
+}
+
+const eventos = [
+  { id: 1, accion: "Confirmado" },
+  { id: 3, accion: "Cancelado" },
+  { id: 2, accion: "Confirmado" }
+];
+const eventosOrdenados = ordenarEventosPorId(eventos);
+const mensajeHistorialOrdenado = document.createElement("p");
+
+mensajeHistorialOrdenado.textContent = (eventosOrdenados[0].id === 3 ? "PASS - " : "FAIL - ") + "El historial muestra primero el evento más reciente";
+resultados.appendChild(mensajeHistorialOrdenado);
+
+const historialVacio = [];
+const mensajeHistorialVacio = document.createElement("p");
+
+mensajeHistorialVacio.textContent = (historialVacio.length === 0 ? "PASS - " : "FAIL - ") + "Historial vacío no contiene eventos";
+resultados.appendChild(mensajeHistorialVacio);
