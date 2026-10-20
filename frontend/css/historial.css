@@ -1,0 +1,26 @@
+.lista-historial {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.evento {
+  margin-bottom: 12px;
+  padding: 16px;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.accion,
+.fecha {
+  margin: 8px 0 0;
+}
+
+.accion {
+  color: #3d7954;
+}
+
+.fecha {
+  color: #5f5f5f;
+  font-size: 0.9rem;
+}

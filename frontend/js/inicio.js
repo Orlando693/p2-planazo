@@ -1,6 +1,7 @@
 const saludo = document.getElementById("saludo");
 const listaPlanes = document.getElementById("lista-planes");
 const botonCrearPlan = document.getElementById("crear-plan");
+const botonVerHistorial = document.getElementById("ver-historial");
 const buscarNombre = document.getElementById("buscar-nombre");
 const filtroEstado = document.getElementById("filtro-estado");
 const filtroFecha = document.getElementById("filtro-fecha");
@@ -10,6 +11,18 @@ const usuario = JSON.parse(localStorage.getItem("usuario"));
 
 if (usuario) {
   saludo.textContent = "Hola, " + usuario.nombre;
+}
+
+function nombreEstado(estado) {
+  if (estado === "En decisión") {
+    return "Pendiente";
+  }
+
+  if (estado === "Decidido") {
+    return "Confirmado";
+  }
+
+  return "Cancelado";
 }
 
 async function cargarPlanes() {
@@ -51,7 +64,7 @@ async function cargarPlanes() {
 
     bloquePlan.className = "plan";
     nombrePlan.textContent = plan.nombre;
-    estadoPlan.textContent = "Estado: " + plan.estado;
+    estadoPlan.textContent = "Estado: " + nombreEstado(plan.estado);
 
     if (plan.estado === "En decisión") {
       estadoPlan.className = "estado estado-pendiente";
@@ -92,4 +105,8 @@ botonLimpiarFiltros.addEventListener("click", function () {
 
 botonCrearPlan.addEventListener("click", function () {
   window.location.href = "crear-plan.html";
+});
+
+botonVerHistorial.addEventListener("click", function () {
+  window.location.href = "historial.html";
 });
